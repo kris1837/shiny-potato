@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rooted — Seeds for your garden</title>
+    <style>
+      :root {
+        --ink: #18352a;
+        --pine: #245b43;
+        --leaf: #468457;
+        --lime: #cfe27d;
+        --cream: #fbf8ef;
+        --sand: #eee6d4;
+        --clay: #c9855b;
+        --line: #d8dfcb;
+        --white: #fffdf8;
+        --muted: #627369;
+        --shadow: 0 22px 60px rgba(31, 63, 46, .13);
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; background: var(--cream); color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      button, input, select { font: inherit; }
+      button { cursor: pointer; }
+      .topbar { background: var(--ink); color: #dcebbd; padding: 10px 5vw; display: flex; justify-content: space-between; font-size: 13px; letter-spacing: .02em; }
+      .nav { height: 78px; padding: 0 5vw; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); background: rgba(251,248,239,.92); }
+      .brand { font-family: Georgia, serif; font-size: 30px; font-weight: bold; letter-spacing: -.06em; display: flex; align-items: center; gap: 9px; }
+      .brand-mark { width: 26px; height: 32px; border-radius: 70% 12% 70% 12%; background: var(--leaf); transform: rotate(-34deg); display: inline-block; }
+      .links { display: flex; gap: 27px; font-size: 14px; font-weight: 650; }
+      .links a { color: var(--ink); text-decoration: none; }
+      .bag { border: 1px solid var(--ink); color: var(--ink); padding: 10px 15px; border-radius: 100px; background: transparent; font-weight: 700; }
+      .hero { min-height: 474px; padding: 74px 5vw 62px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 48px; overflow: hidden; position: relative; background: #e5eed2; }
+      .hero::after { content: ""; position: absolute; height: 390px; width: 390px; right: 5%; top: 65px; border: 47px solid rgba(70,132,87,.17); border-radius: 48% 52% 43% 57%; transform: rotate(20deg); }
+      .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--pine); font-size: 12px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+      .eyebrow::before { content: ""; width: 22px; height: 1px; background: currentColor; }
+      h1 { font-family: Georgia, serif; font-size: clamp(43px, 5.2vw, 72px); line-height: .98; letter-spacing: -.065em; margin: 17px 0 19px; max-width: 670px; }
+      .hero p { color: #456052; line-height: 1.55; font-size: 17px; max-width: 520px; margin-bottom: 28px; }
+      .primary { border: 0; background: var(--pine); color: white; font-weight: 800; padding: 14px 22px; border-radius: 5px; box-shadow: 0 8px 0 #174330; transition: transform .16s, box-shadow .16s; }
+      .primary:hover { transform: translateY(3px); box-shadow: 0 5px 0 #174330; }
+      .hero-visual { z-index: 1; position: relative; display: flex; align-items: center; justify-content: center; }
+      .seed-pack { background: #f6c24f; width: 259px; height: 318px; padding: 20px; position: relative; transform: rotate(7deg); box-shadow: -15px 18px 0 rgba(44,88,54,.12), var(--shadow); border-radius: 4px 4px 18px 18px; overflow: hidden; }
+      .seed-pack::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 30px; background: #dfa630; }
+      .pack-brand { font: bold 23px Georgia, serif; margin-top: 26px; }
+      .pack-label { font-weight: 800; font-size: 39px; line-height: .93; letter-spacing: -.07em; margin: 34px 0 8px; }
+      .pack-sub { text-transform: uppercase; font-size: 10px; font-weight: 800; letter-spacing: .14em; }
+      .tomato { position: absolute; bottom: -11px; right: 11px; width: 125px; height: 125px; border-radius: 50%; background: #e55f43; box-shadow: inset -19px -18px 0 rgba(149,47,31,.18); }
+      .tomato::before { content: "✦"; color: #2d6d45; font-size: 42px; position: absolute; top: -25px; left: 42px; }
+      .section { padding: 82px 5vw; }
+      .heading-row { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 30px; }
+      h2 { font: bold clamp(31px, 3.4vw, 47px)/1 Georgia, serif; letter-spacing: -.055em; margin: 10px 0 0; }
+      .step-note { font-size: 14px; color: var(--muted); margin: 0; }
+      .planner { display: grid; grid-template-columns: minmax(270px, .75fr) 1.25fr; gap: 26px; }
+      .card { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 25px; }
+      .progress { display: flex; gap: 7px; margin: 0 0 26px; }
+      .progress span { height: 5px; flex: 1; background: #dce6ce; border-radius: 8px; }
+      .progress span.active { background: var(--leaf); }
+      .field { margin-bottom: 18px; }
+      .field label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 800; }
+      select, input { width: 100%; border: 1px solid #cbd6c6; border-radius: 6px; padding: 12px; color: var(--ink); background: white; }
+      .soil-options { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+      .soil { border: 1px solid #d3dbce; background: white; padding: 10px; border-radius: 7px; color: var(--muted); font-size: 13px; text-align: left; }
+      .soil.selected { border-color: var(--pine); color: var(--pine); background: #eef5e3; font-weight: 800; }
+      .bed-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .result { background: var(--ink); color: white; border-radius: 14px; padding: 30px; position: relative; overflow: hidden; }
+      .result::before { content: ""; position: absolute; right: -80px; bottom: -110px; height: 250px; width: 250px; border: 35px solid rgba(207,226,125,.22); border-radius: 50%; }
+      .result h3 { font: bold 26px Georgia, serif; letter-spacing: -.04em; margin: 7px 0 8px; }
+      .result > p { color: #bfd0c0; max-width: 540px; line-height: 1.5; margin: 0 0 24px; }
+      .crop-grid { display: grid; grid-template-columns: repeat(2, minmax(190px,1fr)); gap: 11px; position: relative; z-index: 1; }
+      .crop { background: #fffdf8; border: 2px solid transparent; border-radius: 10px; padding: 14px; color: var(--ink); display: flex; gap: 12px; align-items: center; text-align: left; }
+      .crop.selected { border-color: var(--lime); }
+      .crop-icon { height: 40px; width: 40px; display: grid; place-items: center; background: #e9f1d6; border-radius: 50%; font-size: 22px; }
+      .crop b { display: block; font-size: 14px; }
+      .crop small { color: var(--muted); display: block; margin-top: 3px; }
+      .recommendation { margin-top: 19px; background: rgba(255,255,255,.11); border: 1px solid rgba(255,255,255,.18); padding: 17px; border-radius: 9px; display: flex; align-items: center; gap: 15px; position: relative; z-index: 1; }
+      .recommendation strong { color: var(--lime); font-size: 23px; }
+      .recommendation span { font-size: 13px; line-height: 1.4; color: #deebdc; }
+      .varieties { background: #f0eadc; padding: 77px 5vw; }
+      .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+      .product { border-radius: 12px; overflow: hidden; background: var(--white); border: 1px solid var(--line); }
+      .product-art { height: 190px; display: grid; place-items: center; background: #d9e7bd; position: relative; }
+      .product-art.cucumber { background: #dcebc4; } .product-art.corn { background: #f4df9e; }
+      .circle-crop { height: 100px; width: 100px; background: #df593e; border-radius: 50%; box-shadow: inset -16px -15px 0 rgba(130,40,26,.16); }
+      .circle-crop::after { content: "✦"; color: #28623c; font-size: 37px; position: absolute; top: 33px; left: calc(50% - 14px); }
+      .cucumber .circle-crop { background: #5d9b4b; border-radius: 52% 48% 50% 50%; transform: rotate(-36deg); height: 112px; width: 66px; }
+      .corn .circle-crop { background: #f4c244; border-radius: 52% 52% 43% 43%; height: 125px; width: 56px; }
+      .product-info { padding: 19px; }
+      .tag { color: var(--pine); font-size: 10px; text-transform: uppercase; letter-spacing: .12em; font-weight: 800; }
+      .product h3 { font: bold 23px Georgia, serif; letter-spacing: -.04em; margin: 7px 0; }
+      .product p { color: var(--muted); font-size: 13px; line-height: 1.45; min-height: 38px; margin: 0 0 17px; }
+      .price-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--line); padding-top: 15px; }
+      .price { font-weight: 800; } .price small { display:block; font-weight: 500; color: var(--muted); margin-top: 3px; }
+      .add { border: 1px solid var(--pine); color: var(--pine); background: transparent; padding: 9px 12px; border-radius: 5px; font-weight: 800; font-size: 13px; }
+      .add:hover { background: var(--pine); color: white; }
+      .how { background: var(--pine); color: white; display: grid; grid-template-columns: .9fr 1.1fr; gap: 55px; align-items: center; }
+      .how h2 { color: var(--lime); } .how p { color: #dce7d4; line-height: 1.6; }
+      .steps { display: grid; gap: 14px; }
+      .step { display: flex; gap: 16px; background: rgba(255,255,255,.08); padding: 16px; border-radius: 10px; }
+      .number { color: var(--lime); font: bold 24px Georgia, serif; }.step b { display:block; margin-bottom:4px; }.step span { color:#d3e0d0; font-size:13px; }
+      footer { padding: 28px 5vw; display:flex; justify-content:space-between; font-size: 13px; color: var(--muted); }
+      .notice { position: fixed; right: 22px; bottom: 22px; background: var(--ink); color: white; border-radius: 8px; padding: 13px 16px; box-shadow: var(--shadow); transform: translateY(100px); transition: transform .25s; z-index: 20; font-size: 14px; }
+      .notice.visible { transform: translateY(0); }
+      .cart-panel { position: fixed; z-index: 30; right: 0; top: 0; width: min(420px, 100vw); height: 100vh; background: var(--white); padding: 28px; box-shadow: -12px 0 50px rgba(23,53,42,.2); transform: translateX(110%); transition: transform .25s ease; display: flex; flex-direction: column; }
+      .cart-panel.open { transform: translateX(0); }.cart-top { display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); padding-bottom:17px; }.cart-top h2 { font-size:32px; margin:0; }.close { border:0; background:transparent; color:var(--ink); font-size:25px; }.cart-items { flex:1; overflow:auto; padding:12px 0; }.empty { color:var(--muted); line-height:1.5; padding:25px 0; }.cart-item { display:grid; grid-template-columns:1fr auto; gap:8px; border-bottom:1px solid var(--line); padding:15px 0; }.cart-item b { font-size:15px; }.cart-item small { color:var(--muted); font-size:12px; display:block; margin-top:4px; }.qty-controls { display:flex; gap:8px; align-items:center; margin-top:11px; }.qty-controls button { width:25px; height:25px; border:1px solid var(--line); border-radius:4px; background:white; color:var(--pine); font-weight:800; }.remove { border:0; background:none; color:#9c5545; font-size:12px; padding:0; }.cart-total { border-top:1px solid var(--line); padding-top:18px; }.total-line { display:flex; justify-content:space-between; margin-bottom:15px; font-weight:800; }.full { width:100%; }.bulk-note { background:#eef5e3; border-radius:7px; padding:10px; color:var(--pine); font-size:12px; margin: 0 0 14px; line-height:1.4; }
+      @media (max-width: 760px) { .links { display:none; }.hero, .planner, .how { grid-template-columns: 1fr; }.hero { padding-top:52px; }.hero-visual { min-height:280px; }.products { grid-template-columns:1fr; }.crop-grid { grid-template-columns:1fr; }.topbar span:last-child { display:none; }.section, .varieties { padding-top:58px; padding-bottom:58px; } }
+    </style>
+  </head>
+  <body>
+    <div class="topbar"><span>🌱 Grown for your corner of the world</span><span>Russia · Kazakhstan · Poland · Uzbekistan · Kyrgyzstan · Belarus</span></div>
+    <nav class="nav"><div class="brand"><i class="brand-mark"></i>rooted.</div><div class="links"><a href="#planner">Find seeds</a><a href="#varieties">Shop varieties</a><a href="#how">How it works</a></div><button class="bag" id="open-bag">Bag <span id="bag-count">0</span></button></nav>
+    <main>
+      <section class="hero"><div><span class="eyebrow">A better harvest starts here</span><h1>Seeds that know where they’re growing.</h1><p>Tell us about your climate, soil, and garden bed. We’ll help you choose varieties that can thrive—and just the right amount of seed.</p><button class="primary" onclick="document.querySelector('#planner').scrollIntoView({behavior:'smooth'})">Plan my garden →</button></div><div class="hero-visual"><div class="seed-pack"><div class="pack-brand">rooted.</div><div class="pack-label">GOLDEN<br>TOMATO</div><div class="pack-sub">for warm, sunny gardens</div><div class="tomato"></div></div></div></section>
+      <section class="section" id="planner"><div class="heading-row"><div><span class="eyebrow">Your garden profile</span><h2>What would you like to grow?</h2></div><p class="step-note">Step 1 of 3 · It only takes a minute</p></div><div class="planner"><aside class="card"><div class="progress"><span class="active"></span><span></span><span></span></div><div class="field"><label for="country">Your country</label><select id="country"><option>Kazakhstan</option><option>Russia</option><option>Poland</option><option>Uzbekistan</option><option>Kyrgyzstan</option><option>Belarus</option></select></div><div class="field"><label for="zone">Climate profile</label><select id="zone"><option>Cool continental · short summer</option><option>Temperate · four seasons</option><option>Warm continental · long summer</option></select></div><div class="field"><label>Your soil</label><div class="soil-options"><button class="soil">Sandy</button><button class="soil selected">Loamy</button><button class="soil">Clay</button><button class="soil">Organic-rich</button><button class="soil">Not sure</button></div></div><div class="field"><label>Garden bed (metres)</label><div class="bed-inputs"><input id="length" type="number" value="2" min=".5" step=".1" aria-label="Bed length" /><input id="width" type="number" value="3" min=".5" step=".1" aria-label="Bed width" /></div></div></aside>
+        <div class="result"><span class="eyebrow" style="color:#cfe27d">Hand-picked for you</span><h3>Your garden looks promising.</h3><p>These vegetables suit a cool continental climate and loamy soil. Choose one to see a personalised seed recommendation.</p><div class="crop-grid"><button class="crop selected" data-crop="tomato" data-name="Golden Tomato" data-seeds="15"><span class="crop-icon">🍅</span><span><b>Tomatoes</b><small>Best match · 4 varieties</small></span></button><button class="crop" data-crop="cucumber" data-name="Forest Cucumber" data-seeds="9"><span class="crop-icon">🥒</span><span><b>Cucumbers</b><small>Great match · 3 varieties</small></span></button><button class="crop" data-crop="peas" data-name="Sweet Peas" data-seeds="38"><span class="crop-icon">🫛</span><span><b>Peas</b><small>Great match · 3 varieties</small></span></button><button class="crop" data-crop="corn" data-name="Northern Corn" data-seeds="24"><span class="crop-icon">🌽</span><span><b>Corn</b><small>Good match · 2 varieties</small></span></button></div><div class="recommendation"><strong id="seed-count">15 seeds</strong><span id="recommendation-copy">Recommended for your 2 × 3 m bed. That’s enough for 12 tomato plants, with a little extra for germination.</span></div></div></div></section>
+      <section class="varieties" id="varieties"><div class="heading-row"><div><span class="eyebrow">Start with a favourite</span><h2>Seeds worth getting your hands dirty for.</h2></div><button class="add" id="show-all">Show all matches →</button></div><div class="products" id="products"></div></section>
+      <section class="section how" id="how"><div><span class="eyebrow" style="color:#cfe27d">Simple by design</span><h2>Grow with a little more confidence.</h2><p>Our recommendations are based on your garden—not a one-size-fits-all packet. Buy individual seeds, or unlock a better price when you grow bigger.</p></div><div class="steps"><div class="step"><div class="number">01</div><div><b>Share your growing conditions</b><span>Country, climate profile, soil, and bed size.</span></div></div><div class="step"><div class="number">02</div><div><b>Explore seeds that suit your plot</b><span>See varieties selected for your local conditions.</span></div></div><div class="step"><div class="number">03</div><div><b>Get the quantity right</b><span>Our calculator accounts for spacing and germination.</span></div></div></div></section>
+    </main><footer><div class="brand" style="font-size:21px"><i class="brand-mark" style="width:18px;height:22px"></i>rooted.</div><span>Good seeds, good soil, good things ahead.</span></footer>
+    <aside class="cart-panel" id="cart-panel" aria-label="Shopping bag" aria-hidden="true"><div class="cart-top"><h2>Your bag</h2><button class="close" id="close-bag" aria-label="Close bag">×</button></div><div class="cart-items" id="cart-items"></div><div class="cart-total"><p class="bulk-note" id="bulk-note">Buy 25 seeds or more of a variety to save 10%. 100+ seeds save 20%.</p><div class="total-line"><span>Estimated total</span><span id="cart-total">₸ 0</span></div><button class="primary full" id="request-order">Request availability →</button></div></aside><div class="notice" id="notice" role="status" aria-live="polite"></div>
+    <script>
+      const catalogue = [
+        { id: 'golden-tomato', crop: 'tomato', name: 'Golden Tomato', price: 45, icon: 'tomato', tag: 'Your best match', description: 'Sweet, productive fruit for short, bright summers.', zones: ['cool', 'temperate', 'warm'], soils: ['Loamy', 'Organic-rich'], seedsPerSixSqm: 15 },
+        { id: 'forest-cucumber', crop: 'cucumber', name: 'Forest Cucumber', price: 30, icon: 'cucumber', tag: 'Climbing favourite', description: 'Crisp climbing cucumbers with reliable yields.', zones: ['temperate', 'warm'], soils: ['Loamy', 'Sandy', 'Organic-rich'], seedsPerSixSqm: 9 },
+        { id: 'sweet-peas', crop: 'peas', name: 'Sweet Peas', price: 18, icon: 'peas', tag: 'Cool-weather star', description: 'Tender, sweet pods that welcome spring soil.', zones: ['cool', 'temperate'], soils: ['Loamy', 'Clay', 'Organic-rich'], seedsPerSixSqm: 38 },
+        { id: 'northern-corn', crop: 'corn', name: 'Northern Corn', price: 20, icon: 'corn', tag: 'Family favourite', description: 'Early, sweet corn bred for cooler growing seasons.', zones: ['cool', 'temperate', 'warm'], soils: ['Loamy', 'Sandy', 'Organic-rich'], seedsPerSixSqm: 24 },
+        { id: 'ruby-radish', crop: 'radish', name: 'Ruby Radish', price: 12, icon: 'peas', tag: 'Quick harvest', description: 'Crisp, colourful roots ready in just a few weeks.', zones: ['cool', 'temperate', 'warm'], soils: ['Loamy', 'Sandy'], seedsPerSixSqm: 85 },
+        { id: 'summer-beans', crop: 'beans', name: 'Summer Beans', price: 22, icon: 'peas', tag: 'Easy grower', description: 'Tender pods and abundant harvests for sunny beds.', zones: ['temperate', 'warm'], soils: ['Loamy', 'Sandy', 'Organic-rich'], seedsPerSixSqm: 30 }
+      ];
+      const cropLabels = { tomato: 'Tomatoes', cucumber: 'Cucumbers', peas: 'Peas', corn: 'Corn', radish: 'Radishes', beans: 'Beans' };
+      const state = { soil: 'Loamy', selectedCrop: 'tomato', cart: JSON.parse(localStorage.getItem('rooted-cart') || '{}'), showAll: false };
+      const $ = selector => document.querySelector(selector);
+      const area = () => Math.max(.25, (+$('#length').value || 2) * (+$('#width').value || 3));
+      const zoneKey = () => $('#zone').value.startsWith('Cool') ? 'cool' : $('#zone').value.startsWith('Temperate') ? 'temperate' : 'warm';
+      const matching = () => catalogue.filter(item => item.zones.includes(zoneKey()) && (state.soil === 'Not sure' || item.soils.includes(state.soil)));
+      const selectedItem = () => matching().find(item => item.crop === state.selectedCrop) || matching()[0] || catalogue[0];
+      const amountFor = item => Math.max(1, Math.ceil(item.seedsPerSixSqm * area() / 6));
+      const money = value => `₸ ${Math.round(value).toLocaleString('en-US')}`;
+      function discount(quantity) { return quantity >= 100 ? .2 : quantity >= 25 ? .1 : 0; }
+      function showNotice(message) { const notice = $('#notice'); notice.textContent = message; notice.classList.add('visible'); setTimeout(() => notice.classList.remove('visible'), 2500); }
+      function renderProducts() {
+        const results = matching(); const products = state.showAll ? results : results.slice(0, 3);
+        $('#products').innerHTML = products.length ? products.map(item => `<article class="product"><div class="product-art ${item.icon}"><div class="circle-crop"></div></div><div class="product-info"><span class="tag">${item.tag}</span><h3>${item.name}</h3><p>${item.description}</p><div class="price-row"><div class="price">${money(item.price)} <small>per seed · 25+ save 10%</small></div><button class="add add-item" data-id="${item.id}">Add ${amountFor(item)} +</button></div></div></article>`).join('') : `<p>No exact matches yet. Try choosing “Not sure” for soil to see more varieties.</p>`;
+        document.querySelectorAll('.add-item').forEach(button => button.addEventListener('click', () => addToCart(button.dataset.id, amountFor(catalogue.find(item => item.id === button.dataset.id)))));
+        $('#show-all').textContent = state.showAll ? 'Show fewer →' : `Show all ${results.length} matches →`;
+      }
+      function updateRecommendation() {
+        const item = selectedItem(); state.selectedCrop = item.crop;
+        const seeds = amountFor(item); const plantCount = Math.max(1, Math.round(seeds * .8));
+        $('#seed-count').textContent = `${seeds} seeds`;
+        $('#recommendation-copy').textContent = `Recommended for your ${$('#length').value || 2} × ${$('#width').value || 3} m bed. That’s enough for about ${plantCount} ${item.crop} plants, with a little extra for germination.`;
+        document.querySelectorAll('.crop').forEach(button => button.classList.toggle('selected', button.dataset.crop === item.crop));
+        renderProducts();
+      }
+      function saveCart() { localStorage.setItem('rooted-cart', JSON.stringify(state.cart)); }
+      function addToCart(id, quantity) { state.cart[id] = (state.cart[id] || 0) + quantity; saveCart(); renderCart(); showNotice(`${quantity} seeds added to your bag`); }
+      function renderCart() {
+        const entries = Object.entries(state.cart).filter(([, quantity]) => quantity > 0);
+        const totalSeeds = entries.reduce((sum, [, quantity]) => sum + quantity, 0); $('#bag-count').textContent = totalSeeds;
+        $('#cart-items').innerHTML = entries.length ? entries.map(([id, quantity]) => { const item = catalogue.find(product => product.id === id); const saving = discount(quantity); const price = item.price * quantity * (1 - saving); return `<div class="cart-item"><div><b>${item.name}</b><small>${quantity} seeds · ${saving ? `${saving * 100}% bulk saving` : 'add more for bulk savings'}</small><div class="qty-controls"><button data-change="-1" data-id="${id}">−</button><b>${quantity}</b><button data-change="1" data-id="${id}">+</button></div></div><div style="text-align:right"><b>${money(price)}</b><br><button class="remove" data-remove="${id}">Remove</button></div></div>`; }).join('') : `<p class="empty">Your bag is empty. Add a personalised recommendation or browse a seed variety to begin.</p>`;
+        const total = entries.reduce((sum, [id, quantity]) => sum + catalogue.find(item => item.id === id).price * quantity * (1 - discount(quantity)), 0); $('#cart-total').textContent = money(total);
+        document.querySelectorAll('[data-change]').forEach(button => button.addEventListener('click', () => { state.cart[button.dataset.id] = Math.max(1, state.cart[button.dataset.id] + +button.dataset.change); saveCart(); renderCart(); }));
+        document.querySelectorAll('[data-remove]').forEach(button => button.addEventListener('click', () => { delete state.cart[button.dataset.remove]; saveCart(); renderCart(); }));
+      }
+      document.querySelectorAll('.soil').forEach(button => button.addEventListener('click', () => { document.querySelectorAll('.soil').forEach(b => b.classList.remove('selected')); button.classList.add('selected'); state.soil = button.textContent; updateRecommendation(); }));
+      document.querySelectorAll('.crop').forEach(button => button.addEventListener('click', () => { state.selectedCrop = button.dataset.crop; updateRecommendation(); }));
+      document.querySelectorAll('#length,#width,#zone,#country').forEach(input => input.addEventListener('input', updateRecommendation));
+      $('#show-all').addEventListener('click', () => { state.showAll = !state.showAll; renderProducts(); });
+      $('#open-bag').addEventListener('click', () => { $('#cart-panel').classList.add('open'); $('#cart-panel').setAttribute('aria-hidden', 'false'); });
+      $('#close-bag').addEventListener('click', () => { $('#cart-panel').classList.remove('open'); $('#cart-panel').setAttribute('aria-hidden', 'true'); });
+      $('#request-order').addEventListener('click', () => { const hasItems = Object.keys(state.cart).length > 0; showNotice(hasItems ? 'Your request is ready. Checkout will be added next.' : 'Add seeds to your bag first.'); });
+      updateRecommendation(); renderCart();
+    </script>
+  </body>
+</html>
